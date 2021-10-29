@@ -12,7 +12,7 @@ module.exports = {
       config
         .plugin('html')
         .tap(args => {
-          args[0].title= 'electron-egg' // 设置title
+          args[0].title= 'hlol' // 设置title
           return args
         })
     },

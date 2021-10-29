@@ -41,7 +41,7 @@ const config = {
       nodeIntegration: true,
       preload: path.join(__dirname, '../preload.js')
     },
-    frame: false,
+    frame: true,
     //titleBarStyle: 'hidden'
   },
   egg: {

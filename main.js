@@ -38,6 +38,8 @@ async function initialize () {
       }
     })
   })
+
+  app.commandLine.appendSwitch("--disable-http-cache")
   
   app.on('window-all-closed', function () {
     if (process.platform !== 'darwin') {

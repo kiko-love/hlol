@@ -2,7 +2,7 @@
   <div id="app-demo-file">
     <div class="one-block-1">
       <span>
-        1. 上传文件到sm图床13124124
+        1. 上传文件到sm图床
       </span>
     </div>  
     <div class="one-block-2">
