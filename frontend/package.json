@@ -1,6 +1,6 @@
 {
-  "name": "electron-egg",
-  "version": "0.1.0",
+  "name": "hlol",
+  "version": "1.0.1",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",

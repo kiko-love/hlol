@@ -14,74 +14,74 @@ export const constantRouterMap = [
     component: AppSider,
     children: [
       {
-        path: '/demo',
-        name: 'Demo',
+        path: '/smenu',
+        name: 'smenu',
         component: DemoMenu,
         children: [
           {
-            path: '/demo/file/index',
+            path: '/smenu/file/index',
             name: 'DemoFileIndex',
-            component: () => import('@/views/demo/file/Index')
+            component: () => import('@/views/smenu/file/Index')
           },
           {
-            path: '/demo/socket/index',
+            path: '/smenu/socket/index',
             name: 'DemoSocketIndex',
-            component: () => import('@/views/demo/socket/Index')
+            component: () => import('@/views/smenu/socket/Index')
           },
           {
-            path: '/demo/windowview/index',
+            path: '/smenu/windowview/index',
             name: 'DemoWindowViewIndex',
-            component: () => import('@/views/demo/windowview/Index')
+            component: () => import('@/views/smenu/windowview/Index')
           },
           {
-            path: '/demo/window/index',
+            path: '/smenu/window/index',
             name: 'DemoWindowIndex',
-            component: () => import('@/views/demo/window/Index')
+            component: () => import('@/views/smenu/window/Index')
           },
           {
-            path: '/demo/extension/index',
+            path: '/smenu/extension/index',
             name: 'DemoExtensionIndex',
-            component: () => import('@/views/demo/extension/Index')
+            component: () => import('@/views/smenu/extension/Index')
           },
           {
-            path: '/demo/notification/index',
+            path: '/smenu/notification/index',
             name: 'DemoNotificationIndex',
-            component: () => import('@/views/demo/notification/Index')
+            component: () => import('@/views/smenu/notification/Index')
           },
           {
-            path: '/demo/powermonitor/index',
+            path: '/smenu/powermonitor/index',
             name: 'DemoPowerMonitorIndex',
-            component: () => import('@/views/demo/powermonitor/Index')
+            component: () => import('@/views/smenu/powermonitor/Index')
           },
           {
-            path: '/demo/screen/index',
+            path: '/smenu/screen/index',
             name: 'DemoScreenIndex',
-            component: () => import('@/views/demo/screen/Index')
+            component: () => import('@/views/smenu/screen/Index')
           },
           {
-            path: '/demo/theme/index',
+            path: '/smenu/theme/index',
             name: 'DemoThemeIndex',
-            component: () => import('@/views/demo/theme/Index')
+            component: () => import('@/views/smenu/theme/Index')
           },                               
           {
-            path: '/demo/shortcut/index',
+            path: '/smenu/shortcut/index',
             name: 'DemoShortcutIndex',
-            component: () => import('@/views/demo/shortcut/Index')
+            component: () => import('@/views/smenu/shortcut/Index')
           },
           {
-            path: '/demo/software/open',
+            path: '/smenu/software/open',
             name: 'DemoSoftwareIndex',
-            component: () => import('@/views/demo/software/Index')
+            component: () => import('@/views/smenu/software/Index')
           },
           {
-            path: '/demo/system/index',
+            path: '/smenu/system/index',
             name: 'DemoSystemIndex',
-            component: () => import('@/views/demo/system/Index')
+            component: () => import('@/views/smenu/system/Index')
           },
           {
-            path: '/demo/testapi/index',
+            path: '/smenu/testapi/index',
             name: 'DemoTestApiIndex',
-            component: () => import('@/views/demo/testapi/Index')
+            component: () => import('@/views/smenu/testapi/Index')
           },
         ]  
       },

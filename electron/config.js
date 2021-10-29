@@ -41,7 +41,7 @@ const config = {
       nodeIntegration: true,
       preload: path.join(__dirname, '../preload.js')
     },
-    frame: true,
+    frame: false,
     //titleBarStyle: 'hidden'
   },
   egg: {
@@ -61,7 +61,7 @@ const config = {
     }
   },
   awakeProtocol: {
-    protocol: 'electron-egg', // 自定义协议名（默认你的应用名称-英文）
+    protocol: 'hlol', // 自定义协议名（默认你的应用名称-英文）
     args: []
   },
   crashReport: {
@@ -77,8 +77,8 @@ const config = {
     url: 'https://discuz.chat/' // Any web url
   },
   tray: {
-    title: 'EE程序', // 托盘显示标题
-    icon: '/asset/images/tray_logo.png' // 托盘图标
+    title: 'hlol', // 托盘显示标题
+    icon: '/asset/images/logo.ico' // 托盘图标
   }
 }
 
