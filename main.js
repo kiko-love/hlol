@@ -1,4 +1,5 @@
-const {app, BrowserWindow, BrowserView, Menu} = require('electron')
+const { app, BrowserWindow, BrowserView, Menu, ipcMain } = require('electron')
+
 const path = require('path')
 const eggLauncher = require('./electron/lib/lanucher')
 const setup = require('./electron/setup')
@@ -29,7 +30,7 @@ eggConfig.env = ENV
 // eLogger
 const eLogger = require('./electron/lib/eLogger').get()
 
-async function initialize () {
+async function initialize() {
   app.whenReady().then(() => {
     createWindow()
     app.on('activate', function () {
@@ -40,23 +41,46 @@ async function initialize () {
   })
 
   app.commandLine.appendSwitch("--disable-http-cache")
-  
+
   app.on('window-all-closed', function () {
-    if (process.platform !== 'darwin') {
+    if (process.platform !== 'win32') {
       eLogger.info('[main] [initialize] window-all-closed quit')
       helper.appQuit()
     }
   })
+
+
 }
 
-async function createWindow () {
+async function createWindow() {
   const winOptions = electronConfig.get('windowsOption')
   MAIN_WINDOW = new BrowserWindow(winOptions)
 
+
+  //  新增三块 1 2 3； MAIN_WINDOW 是 MAIN_WINDOW = new BrowserWindow({......})来的。
+  // 1. 窗口 最小化
+  ipcMain.on('window-min', function () { // 收到渲染进程的窗口最小化操作的通知，并调用窗口最小化函数，执行该操作
+    MAIN_WINDOW.minimize();
+  })
+  // 2. 窗口 最大化、恢复
+  ipcMain.on('window-max', function () {
+    if (MAIN_WINDOW.isMaximized()) { // 为true表示窗口已最大化
+      MAIN_WINDOW.restore();// 将窗口恢复为之前的状态.
+    } else {
+      MAIN_WINDOW.maximize();
+    }
+  })
+  // 3. 关闭窗口
+  ipcMain.on('window-close', function () {
+    // eLogger.info(process.platform);
+    MAIN_WINDOW.close();
+  })
+
+
   // loading html
   loadingView(winOptions)
-
-  if (eggConfig.env === 'prod') {
+  eLogger.info('---------------------------------', eggConfig.env)
+  if (eggConfig.env === 'prod' || eggConfig.env === 'local') {
     // hidden menu
     Menu.setApplicationMenu(null)
 
@@ -74,7 +98,7 @@ async function createWindow () {
   return MAIN_WINDOW
 }
 
-async function startServer (options) {
+async function startServer(options) {
   eLogger.info('[main] [startServer] options', options)
   const protocol = 'http://'
   let startRes = null
@@ -86,7 +110,7 @@ async function startServer (options) {
     loadMainUrl(url)
     return true
   }
-  
+
   if (ENV === 'prod') {
     url = protocol + options.hostname + ':' + options.port
   } else {
@@ -94,13 +118,13 @@ async function startServer (options) {
     const selectMode = developmentModeConfig.default
     const modeInfo = developmentModeConfig.mode[selectMode]
     switch (selectMode) {
-      case 'vue' :
+      case 'vue':
         url = protocol + modeInfo.hostname + ':' + modeInfo.port
         break
-      case 'react' :
+      case 'react':
         url = protocol + modeInfo.hostname + ':' + modeInfo.port
         break
-      case 'ejs' :
+      case 'ejs':
         url = protocol + modeInfo.hostname + ':' + modeInfo.port
         break
     }
@@ -112,14 +136,14 @@ async function startServer (options) {
     loadMainUrl(url)
     return true
   }
-  
+
   app.relaunch()
 }
 
 /**
  * White screen optimization
  */
-function loadingView (winOptions) {
+function loadingView(winOptions) {
   const loadingBrowserView = new BrowserView()
   MAIN_WINDOW.setBrowserView(loadingBrowserView)
   loadingBrowserView.setBounds({
@@ -132,13 +156,13 @@ function loadingView (winOptions) {
   // loading html
   const loadingHtml = path.join('file://', __dirname, '/asset/loading.html')
   loadingBrowserView.webContents.loadURL(loadingHtml)
-  
+
   MAIN_WINDOW.webContents.on('dom-ready', async (event) => {
     MAIN_WINDOW.removeBrowserView(loadingBrowserView)
   });
 }
 
-function loadMainUrl (url) {
+function loadMainUrl(url) {
   MAIN_WINDOW.loadURL(url)
 }
 

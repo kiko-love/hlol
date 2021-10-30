@@ -7,7 +7,7 @@
       <a-menu theme="light" mode="inline" :default-selected-keys="['menu_100']">
         <a-menu-item v-for="(menuInfo, subIndex) in menu" :key="subIndex">
           <router-link :to="{ name: menuInfo.pageName, params: menuInfo.params}">
-            <a-icon :type=menuInfo.icon />
+            <!-- <a-icon :type=menuInfo.icon /> -->
             <span>{{ menuInfo.title }}</span>
           </router-link>
         </a-menu-item>
@@ -27,7 +27,7 @@ export default {
       menu: {
         'menu_100' : {
           icon: 'profile',
-          title: '文件',
+          title: '首页',
           pageName: 'DemoFileIndex',
           params: {}
         },

@@ -1,59 +1,71 @@
 <template>
   <a-layout id="app-layout-sider">
-    <a-layout-sider
-      v-model="collapsed"
-      theme="light"
-      class="layout-sider"
-    >
+    <a-layout-sider v-model="collapsed" theme="light" class="layout-sider">
       <div class="logo">
-        <img class="pic-logo" src="~@/assets/logo.png">
+        <img class="pic-logo" src="~@/assets/logo.png" />
       </div>
-      <a-menu class="menu-item" theme="light" mode="inline" :default-selected-keys="['menu_1']" @click="menuHandle">
+      <a-menu
+        class="menu-item"
+        theme="light"
+        mode="inline"
+        :default-selected-keys="['menu_1']"
+        @click="menuHandle"
+      >
         <a-menu-item v-for="(menuInfo, index) in menu" :key="index">
           <a-icon :type="menuInfo.icon" />
           {{ menuInfo.title }}
         </a-menu-item>
       </a-menu>
     </a-layout-sider>
+
     <a-layout>
       <a-layout-content class="layout-content">
-        <router-view />
+        <keep-alive>
+          <router-view v-if="$route.meta.keepAlive"></router-view>
+        </keep-alive>
+        <router-view v-if="!$route.meta.keepAlive"></router-view>
       </a-layout-content>
     </a-layout>
   </a-layout>
 </template>
 <script>
 export default {
-  name: 'AppSider',
+  name: "AppSider",
   data() {
     return {
       collapsed: true,
       menu: {
-        'menu_1' : {
-          icon: 'home',
-          title: '功能',
-          pageName: 'DemoFileIndex',
-          params: {},
+        menu_1: {
+          icon: "home",
+          title: "大全",
+          pageName: "heroList",
+          params: {}
         },
-        'menu_2' : {
-          icon: 'profile',
-          title: '其它',
-          pageName: 'OtherIndex',
-          params: {},
+        // menu_2: {
+        //   icon: "profile",
+        //   title: "详情",
+        //   pageName: "heroDetail",
+        //   params: {}
+        // },
+        menu_3: {
+          icon: "profile",
+          title: "关于",
+          pageName: "OtherIndex",
+          params: {}
         }
       }
     };
   },
-  created () {},
-  mounted () {
-    this.menuHandle({key: 'menu_1'})
+  created() {},
+  mounted() {
+    this.menuHandle({ key: "menu_1" });
   },
   methods: {
-    menuHandle (item) {
-      const linkInfo = this.menu[item.key]
-      this.$router.push({ name: linkInfo.pageName, params: linkInfo.params})
-    },
-  },
+    menuHandle(item) {
+      const linkInfo = this.menu[item.key];
+      this.$router.push({ name: linkInfo.pageName, params: linkInfo.params });
+    }
+  }
 };
 </script>
 <style lang="less" scoped>
@@ -62,6 +74,7 @@ export default {
   height: 100%;
   .logo {
     border-bottom: 1px solid #e8e8e8;
+    text-align: center;
   }
   .pic-logo {
     height: 32px;
