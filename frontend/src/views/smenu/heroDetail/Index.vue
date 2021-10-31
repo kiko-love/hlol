@@ -1,9 +1,9 @@
 !<template>
   <div class="d-container">
     <a-row>
-      <div style="background-color: black !important;">
+      <div style="background-color: transparent !important;position:fixed; z-index:10;">
         <a-page-header
-          style="background-color: black !important; color:#ffffff;"
+          style="background-color: transparent !important; color:#ffffff;"
           :ghost="false"
           title="英雄详情"
           sub-title
@@ -57,17 +57,33 @@
         <div slot="nextArrow" class="custom-slick-arrow arrow-slick-right" style="right: 10px">
           <a-icon type="right-circle" />
         </div>
+        <!-- 自定义指示器 -->
+        <a slot="customPaging" slot-scope="props">
+          <div>
+            <img
+              width="49"
+              height="36"
+              :src="getpreviewImg(props.i)"
+              :onerror="defaultImg"
+              :alt="props.i"
+            />
+          </div>
+          <!-- {{props.i}} -->
+        </a>
         <template>
+          <!-- 皮肤列表 -->
           <div v-for="(item,index) in skins" :key="index" class="skin-item">
             <template>
               <img :src="item.mainImg" alt />
             </template>
             <template>
               <div class="skin-name-container">
+                <!-- 皮肤名字 -->
                 <span class="skin-name">{{item.name}}</span>
               </div>
             </template>
           </div>
+          <!-- 炫彩皮肤 -->
           <div v-for="(item,index) in chromas_skins" :key="index" class="skin-item">
             <template>
               <img
@@ -94,7 +110,6 @@
 </template>
 
 <script>
-import { forIn } from "lodash";
 export default {
   created() {},
   mounted() {
@@ -103,6 +118,10 @@ export default {
   },
   data() {
     return {
+      defaultImg:
+        'this.width=36;this.height=36;this.onerror=null;this.src="' +
+        require("@/assets/logo.png") +
+        '"', //默认图地址
       skill_passive: [],
       skills: [],
       heroInfo: {},
@@ -113,6 +132,15 @@ export default {
     };
   },
   methods: {
+    loadError(item, e) {
+      // 图片加载出错
+      // if (item.status == 0) {
+      //   e.target.src = '@/assets/logo.png';
+      //   item.status = 1;
+      // }
+      console.log(item);
+      console.log(e);
+    },
     sortSkills() {
       return this.sortByKey(this.heroInfo.spells, "spellKey");
     },
@@ -157,7 +185,6 @@ export default {
               skill_tmp.push(that.heroInfo.spells[a]);
             }
           }
-          console.log(skill_tmp);
 
           for (let k1 in skey) {
             for (let k2 in skill_tmp) {
@@ -167,7 +194,7 @@ export default {
               }
             }
           }
-          console.log(that.skills);
+          console.log(that.skins);
 
           // console.log(that.chromas_skins);
         })
@@ -176,6 +203,14 @@ export default {
     onchangeHeroId() {
       // console.log(this.value)
       this.getHero(this.value);
+    },
+    getpreviewImg(k) {
+      if (k <= this.skins.length - 1) {
+        return this.skins[k].mainImg;
+      } else {
+        k = k - this.skins.length;
+        return this.chromas_skins[k].chromaImg;
+      }
     }
   }
 };
@@ -194,11 +229,39 @@ html body {
 }
 
 .des-sty::before {
-  content: '';
+  content: "";
   height: 20px;
   width: 20px;
   background-color: #c2a476;
   color: #c2a476;
+}
+
+li img {
+  transition: 0.1s;
+}
+
+/deep/ li.slick-active img {
+  margin: 5px 0 0 0;
+  width: 72px;
+  height: 56px;
+  border: 2px solid wheat;
+  transition: 0.1s;
+}
+
+/deep/ li.slick-active img:hover {
+  margin: 5px 0 0 0;
+  width: 72px;
+  height: 56px;
+  border: 2px solid wheat;
+  transition: 0.1s;
+}
+
+/deep/ li img:hover {
+  margin: 5px 0 0 0;
+  width: 64px;
+  height: 48px;
+  border: 2px solid wheat;
+  transition: 0.1s;
 }
 
 /deep/ .ant-tabs-tabpane {
@@ -209,6 +272,8 @@ html body {
 
 /deep/ .ant-tabs-tab {
   color: #7c694b;
+  filter: grayscale(100%);
+  transition: 0.5s;
 }
 
 /deep/ .ant-tabs-tabpane {
@@ -225,6 +290,8 @@ html body {
 
 /deep/ .ant-tabs-tab-active {
   color: wheat;
+  filter: brightness(100%);
+  transition: 0.5s;
 }
 
 /deep/ .anticon-arrow-left {
@@ -263,7 +330,7 @@ html body {
 }
 
 .skin-item {
-  border: 2px solid #c2a476;
+  // border: 2px solid #c2a476;
   margin: 15px auto;
   display: flex;
   justify-content: center;
@@ -272,7 +339,8 @@ html body {
 }
 
 /deep/ .slick-dots-bottom {
-  display: none !important;
+  // display: none !important;
+  text-align: left;
 }
 
 .skin-name {

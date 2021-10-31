@@ -37,16 +37,16 @@ export default {
       menu: {
         menu_1: {
           icon: "home",
-          title: "大全",
+          title: "英雄",
           pageName: "heroList",
           params: {}
         },
-        // menu_2: {
-        //   icon: "profile",
-        //   title: "详情",
-        //   pageName: "heroDetail",
-        //   params: {}
-        // },
+        menu_2: {
+          icon: "profile",
+          title: "物品",
+          pageName: "OtherIndex",
+          params: {}
+        },
         menu_3: {
           icon: "profile",
           title: "关于",

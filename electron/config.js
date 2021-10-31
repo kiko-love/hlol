@@ -39,6 +39,7 @@ const config = {
       //webSecurity: false,
       contextIsolation: false, // 设置此项为false后，才可在渲染进程中使用electron api
       nodeIntegration: true,
+      webview: true,
       preload: path.join(__dirname, '../preload.js')
     },
     frame: false,
@@ -67,9 +68,9 @@ const config = {
   },
   crashReport: {
     submitURL: "",
-    productName: "", 
+    productName: "",
     rateLimit: false,
-    uploadToServer: false, 
+    uploadToServer: false,
     ignoreSystemCrashHandler: true,
     compress: false
   },
